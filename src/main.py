@@ -5,7 +5,7 @@ import time
 from typing import Dict
 
 
-request_session = requests.Session()
+request = requests.Session()
 
 
 def init_log() -> None:
@@ -20,7 +20,7 @@ def init() -> None:
 
 def get(path: str) -> str:
     full_url: str = f'https://emperor.hexa-network.net/up/{path}'
-    return request_session.get(full_url).text
+    return request.get(full_url).text
 
 def get_json(path: str) -> Dict:
     resp: str = get(path)
@@ -30,11 +30,8 @@ def get_json(path: str) -> Dict:
 def config() -> Dict:
     return get_json('configuration')
 
-def milli() -> int:
-    return int(time.time() * 10000)
-
 def update() -> Dict:
-    return get_json(f'world/world/{milli()}')
+    return get_json(f'world/world/')
 
 def pretty(obj: Dict) -> str:
     return json.dumps(obj, indent=4, sort_keys=True)
@@ -43,8 +40,9 @@ def main() -> None:
     init()
     
     while True:
-        logging.info(pretty(update()))
-        time.sleep(2)    
+        logging.info(pretty(update()["updates"]))
+        time.sleep(2)
+
 
 if __name__ == "__main__":
     main()
