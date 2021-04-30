@@ -13,4 +13,5 @@ def init() -> None:
 def main() -> None:
     init()
 
-main()
+if __name__ == "__main__":
+    main()
