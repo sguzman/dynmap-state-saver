@@ -12,3 +12,5 @@ def init() -> None:
 
 def main() -> None:
     init()
+
+main()
